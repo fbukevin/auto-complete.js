@@ -41,7 +41,8 @@
     </head>    
     <body>
         <div class="main">
-	        <form onsubmit="return false">
+        	<!-- disable form submit, replaced with input (onkeypress:keyCode==13) -->
+	        <form onsubmit="return false"> 
 	        	<ul>
 	       			<li>
 	       				<input type="text" id="keyin" onkeypress="queryInput(this.value)"/>
@@ -55,16 +56,19 @@
         <ul name="query_result" style="display: none;"></ul>
         <script>
         	function queryInput(text){
-	        	var tag = document.getElementById('new_tag');
-	        	var keyin = document.getElementById('keyin');
-	        	if (text != null && text != "") {        	        		
-        			tag.classList.add("offset");
-        			// tag.innerHTML = text;
-        			console.log(text);
-        			tag.style.display = "inline"; 
-    			} else if (text == null || text == ""){
-        			tag.classList[1] = "";
-        			tag.style.display = "none";
+        		if(event.keyCode == 13)	// when key for onkeypress is 'enter' or 'return'
+        		{
+		        	var tag = document.getElementById('new_tag');
+		        	var keyin = document.getElementById('keyin');
+		        	if (text != null && text != "") {        	        		
+	        			tag.classList.add("offset");
+	        			// tag.innerHTML = text;
+	        			console.log(text);
+	        			tag.style.display = "inline"; 
+	    			} else if (text == null || text == ""){
+	        			tag.classList[1] = "";
+	        			tag.style.display = "none";
+	    			}
     			}
         	}
 
