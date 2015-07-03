@@ -56,19 +56,18 @@
         <ul name="query_result" style="display: none;"></ul>
         <script>
         	function queryInput(text){
-        		if(event.keyCode == 13)	// when key for onkeypress is 'enter' or 'return'
-        		{
-		        	var tag = document.getElementById('new_tag');
-		        	var keyin = document.getElementById('keyin');
-		        	if (text != null && text != "") {        	        		
-	        			// tag.classList.add("offset");
-	        			tag.innerHTML = text;
-	        			tag.style.display = "inline"; 
-	    			} else if (text == null || text == ""){
-	        			// tag.classList[1] = "";
-	        			tag.style.display = "none";
-	    			}
-    			}
+        	  if(event.keyCode == 13){	// when key for onkeypress is 'enter' or 'return'
+		        var tag = document.getElementById('new_tag');
+		       	var keyin = document.getElementById('keyin');
+		        if (text != null && text != "") {		
+	        	  // tag.classList.add("offset");
+	        	  tag.innerHTML = text;
+	        	  tag.style.display = "inline"; 
+	    		} else if (text == null || text == ""){ // remove all input
+	        	  // tag.classList[1] = "";
+	        	  tag.style.display = "none";
+	    		}
+    		  }
         	}
 
         	/* TODO:
