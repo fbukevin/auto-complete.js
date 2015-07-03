@@ -43,7 +43,7 @@
         <div class="main">
         	<!-- disable form submit, replaced with input (onkeypress:keyCode==13) -->
 	        <form onsubmit="return false"> 
-	        	<ul>
+	        	<ul id="main_list">
 	       			<li>
 	       				<input type="text" id="keyin" onkeypress="queryInput(this.value)"/>
 	       			</li>
@@ -63,6 +63,19 @@
 	        	  // tag.classList.add("offset");
 	        	  tag.innerHTML = text;
 	        	  tag.style.display = "inline"; 
+	        	  
+	        	  // change id:new_tag to id:closed_tag
+	        	  tag.id = 'closed_tag';
+	        	  
+	        	  // create a tag in id:new_tag for next insertion
+	        	  var new_tag = document.createElement('span');
+	        	  new_tag.id = 'new_tag';
+	        	  new_tag.style="display: hidden;";
+	        	  var li = document.createElement('li');
+	        	  li.appendChild(new_tag);
+	        	  var ul = document.getElementById('main_list');
+	        	  ul.appendChild(li);
+
 	    		} else if (text == null || text == ""){ // remove all input
 	        	  // tag.classList[1] = "";
 	        	  tag.style.display = "none";
@@ -71,12 +84,9 @@
         	}
 
         	/* TODO:
-				function for enter pressed or mouse click
-				create a new span element for next input
-        	*/
-
-        	/* TODO:
-				function for auto-complete querying
+				1. move input in right of span
+				2. function for auto-complete querying
+				2. mouse click on list then input
         	*/
         </script>
     </body>
