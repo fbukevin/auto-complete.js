@@ -43,12 +43,13 @@
         <div class="main">
         	<!-- disable form submit, replaced with input (onkeypress:keyCode==13) -->
 	        <form onsubmit="return false"> 
-	        	<ul id="main_list">
+	        	<ul id="main_list">	       				
 	       			<li>
-	       				<input type="text" id="keyin" onkeypress="queryInput(this.value)"/>
-	       			</li>
-	       			<li>
+
 	       				<span id="new_tag" style="display: hidden;"></span>
+	       			</li>
+	       			<li id="inputItem">
+	       				<input type="text" id="keyin" onkeypress="queryInput(this.value)"/>
 	       			</li>
 	       		</ul>
 	        </form>
@@ -74,8 +75,8 @@
 	        	  var li = document.createElement('li');
 	        	  li.appendChild(new_tag);
 	        	  var ul = document.getElementById('main_list');
-	        	  ul.appendChild(li);
-
+	        	  var inputItem = document.getElementById('inputItem');
+	        	  ul.insertBefore(li, inputItem);
 	    		} else if (text == null || text == ""){ // remove all input
 	        	  // tag.classList[1] = "";
 	        	  tag.style.display = "none";
