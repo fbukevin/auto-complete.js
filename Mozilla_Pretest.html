@@ -1,10 +1,48 @@
 <html>
     <head>
-    
+    	<style>
+    		.main {
+    			text-align: center;
+				margin-left: auto;
+				margin-top: 100px;
+    		}
+    		input {
+    			width: 500px;
+    			height: 30px;
+    			box-shadow: 4px 4px 3px rgba(20%,20%,40%,0.5);
+    			border-radius: 5px;
+    		}
+			.tag {
+				position: relative;
+				left: 0;
+				background-color: yellow;
+			}
+
+			.offset{
+				left: 16px;
+			}			
+    	</style>
     </head>    
     <body>
-        <form>
-        
-        </form>
+        <div class="main">
+	        <form>
+	       		<span class="tag" id="tag"  style="visibility: hidden;">x</span>
+	       		<input type="text" id="keyin" onkeyup="queryInput(this.value)"/>
+	        </form>
+    	</div>
+        <ul name="query_result" style="display: none;"></ul>
+        <script>
+        	function queryInput(text){
+	        	var tag = document.getElementById('tag');
+	        	var keyin = document.getElementById('keyin');
+	        	if (text != null && text != "") {        
+        			tag.classList.add("offset");     // cannot use push function
+        			tag.style.visibility = "visible";
+    			} else if (text == null || text == ""){
+        			tag.classList[1] = "";
+        			tag.style.visibility = "hidden";
+    			}
+        	}
+        </script>
     </body>
 </html>
