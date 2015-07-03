@@ -6,7 +6,7 @@
     		}
     		input[type='text'] {
     			border-style: none;
-    			background-color: lightgreen;
+    			background: lightgreen;
     		}
 
 			input:hover, input:focus{
@@ -21,12 +21,29 @@
 				padding: 0;
 			}
 
-			li{
+			li {
 				list-style: none;
 				display: block;
 				float: left;
 				margin: 2px 5px 2px 0;
-				background-color: lightblue;
+			}
+
+			#closed_tag{
+				background: lightblue;
+			}
+
+			#filter {
+				box-shadow: 4px 4px 3px rgba(20%,20%,40%,0.5);
+				border-radius: 5px;
+				width: 200px;
+			}
+			#filter > li {				
+				display: block;
+				float: none;				
+			}
+			#filter > li:hover{
+				background: yellow;
+				cursor: pointer;
 			}
     	</style>
     </head>    
@@ -43,17 +60,20 @@
 	       			</li>
 	       		</ul>
 	       		<input type="submit" id="submit" disabled />
+				<ul id="filter"></ul>
 	        </form>
     	</div>
-        <ul id="filter" style="display: none;"></ul>
         <script>
         var timezone = ["Amsterdam", "Andorra", "Athens", "Belfast", "Belgrade","Berlin","Bratislava","Brussels","Bucharest","Budapest","Chișinău","Copenhagen","Dublin","Gibraltar","Guernsey","Helsinki","Isle_of_Man","Istanbul","Jersey","Kaliningrad","Kiev","Lisbon","Ljubljana","London","Luxembourg","Madrid","Malta","Mariehamn","Minsk","Monaco","Moscow","Nicosia","Oslo","Paris","Podgorica","Prague","Riga","Rome","Samara","San_Marino","Sarajevo","Simferopol","Skopje","Sofia","Stockholm","Tallinn","Tirane","Tiraspol","Uzhgorod","Vaduz","Vatican","Vienna","Vilnius","Volgograd","Warsaw","Zagreb","Zaporozhye","Zurich","Adelaide","Brisbane","Broken_Hill","Currie","Darwin","Eucla","Hobart","Lindeman","Lord_Howe","Melbourne","Perth","Sydney","Abidjan","Accra","Addis_Ababa","Algiers","Asmara","Bamako","Bangui","Banjul","Bissau","Blantyre","Brazzaville","Bujumbura","Cairo","Casablanca","Ceuta","Conakry","Dakar","Dar_es_Salaam","Djibouti","Douala","El_Aaiún","Freetown","Gaborone","Harare","Johannesburg","Juba","Kampala","Khartoum","Kigali","Kinshasa","Lagos","Libreville","Lomè","Luanda","Lubumbashi","Lusaka","Malabo","Maputo","Maseru","Mbabane","Mogadishu","Monrovia","Nairobi","N'djamena","Niamey","Nouakchott","Ouagadougou","Porto-Novo","São_Tomé","Timbuktu","Tripoli","Tunis","Windhoek","Aden","Almaty","Amman","Anadyr","Aqtau","Aqtobe","Ashgabat","Ashkhabad","Baghdad","Bahrain","Baku","Bangkok","Beirut","Bishkek","Brunei","Choibalsan","Chongqing","Colombo","Damascus","Dhaka","Dili","Dubai","Dushanbe","Gaza","Harbin","Hebron","Ho_Chi_Minh","Hong_Kong","Hovd","Irkutsk","Istanbul","Jakarta","Jayapura","Jerusalem","Kabul","Kamchatka","Karachi","Kashgar","Kathmandu","Kolkata","Krasnoyarsk","Kuala_Lumpur","Kuching","Kuwait","Macau","Magadan","Makassar","Manila","Muscat","Nicosia","Novokuznetsk","Novosibirsk","Omsk","Oral","Phnom_Penh","Pontianak","Pyongyang","Qatar","Qyzylorda","Rangoon","Riyadh","Saigon","Sakhalin","Samarkand","Seoul","Shanghai","Singapore","Taipei","Tashkent","Tbilisi","Tehran","Tel_Aviv","Thimphu","Tokyo","Ulan_Bator","Vientiane","Vladivostok","Yakutsk","Yekaterinburg","Yerevan","Casey","Davis","DumontDUrville","Macquarie","Mawson","McMurdo","Palmer","Rothera"];
 
         	 function grep(pattern, callback){
+
         	 	var result = [];
+
         	 	for(var i=0; i < timezone.length; i++){
         	 		var city = timezone[i];
         	 		var cond = callback(city, pattern);
+
         	 		if(cond) {
         	 			result.push(city);
         	 		}        	 		
@@ -62,11 +82,18 @@
         	 }
         	
 
-        	function addTag(text){
-			  var keyin = document.getElementById('keyin');			  
+        	function addTag(text) {
+
+			  var keyin = document.getElementById('keyin');		
+			  var filter = document.getElementById('filter');	  
+			  filter.innerHTML = ""; 	// clear for each keyin
+
         	  if(event.keyCode == 13){	// when key for onkeypress is 'enter' or 'return'
+
 		        var tag = document.getElementById('new_tag');
+
 		        if (text.length != 0) {		
+
 	        	  tag.innerHTML = text;
 	        	  tag.style.display = "inline"; 
 	        	  
@@ -84,23 +111,29 @@
 	        	  ul.insertBefore(li, inputItem);
 	        	  keyin.value = "";
 	    		} 
+
     		  } else {
-    		  		var set = [];
-    		  		var filter = document.getElementById('filter');
-    		  		filter.innerHTML = ""; 	// clear for each keyin
+
+    		  		var set = [];    
+
     		  		if(text.length != 0){
+
     		  			console.log(text.length + '*')
     		  			var pattern = new RegExp("^" + text, "i"); 	// "i" stands for "case-insensitive"
     		  			set = grep(pattern, function(city, pattern){
     		  			// use callback since the number of matching items is large, or if matching remotely, callback can avoid blocking if network is blocked
-    		  			// console.log(pattern);
     		  				return pattern.test(city);
     		  			}); 
     		  			
-    		  			for(var i=0; i < set.length; i++){
-    		  				var li = document.createElement('li');
-    		  				li.innerHTML = set[i];
-    		  				filter.appendChild(li);
+    		  			if(set.length != 0){    		  				
+	    		  			for(var i=0; i < set.length; i++){
+	    		  				var li = document.createElement('li');
+	    		  				li.innerHTML = set[i];
+	    		  				li.onclick = function selectIt(){ 
+	    		  					// alert(this.innerHTML);
+	    		  				};
+	    		  				filter.appendChild(li);
+	    		  			}
     		  			}
     		  		}
     		  }
@@ -109,6 +142,8 @@
         	/* TODO:				
 				1. mouse click on list then input
 				2. make list height dynamically
+				3. make some snippets into function 
+				4. enable submit button at first matching is insert
         	*/
         </script>
     </body>
