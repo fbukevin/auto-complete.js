@@ -133,7 +133,9 @@
 	    		  				var li = document.createElement('li');
 	    		  				li.innerHTML = set[i];
 	    		  				li.onclick = function selectIt(){ 
-	    		  					addTag(this.innerHTML);  	    		  					
+	    		  					addTag(this.innerHTML); 
+	    		  					var submit = document.getElementById('submit');
+	    		  					submit.removeAttribute('disabled');
 	    		  				};
 	    		  				filter.appendChild(li);
 	    		  			}
@@ -142,11 +144,11 @@
     		  }
         	}
 
-        	/* TODO:				
-				1. mouse click on list then input
-				2. make list height dynamically
-				3. make some snippets into function 
-				4. enable submit button at first matching is insert
+        	/* TODO:								
+				1. make list height dynamically
+				2. make some snippets into function 
+				3. remove tag (remember disable submit)
+				final. optimize code (efficiency and memory leak)
         	*/
         </script>
     </body>
