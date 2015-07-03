@@ -56,7 +56,7 @@
 	       				<span id="new_tag" style="display: hidden;"></span>
 	       			</li>
 	       			<li id="inputItem">
-	       				<input type="text" id="keyin" list="timezone" onkeyup="addTag(this.value)" autocomplete="off" placeholder="Please type city name"/>
+	       				<input type="text" id="keyin" list="timezone" onkeyup="query(this.value)" autocomplete="off" placeholder="Please type city name"/>
 	       			</li>
 	       		</ul>
 	       		<input type="submit" id="submit" disabled />
@@ -81,19 +81,8 @@
         	 	return result;
         	 }
         	
-
-        	function addTag(text) {
-
-			  var keyin = document.getElementById('keyin');		
-			  var filter = document.getElementById('filter');	  
-			  filter.innerHTML = ""; 	// clear for each keyin
-
-        	  if(event.keyCode == 13){	// when key for onkeypress is 'enter' or 'return'
-
-		        var tag = document.getElementById('new_tag');
-
-		        if (text.length != 0) {		
-
+        	function addTag(text){
+				  var tag = document.getElementById('new_tag');
 	        	  tag.innerHTML = text;
 	        	  tag.style.display = "inline"; 
 	        	  
@@ -109,7 +98,21 @@
 	        	  var ul = document.getElementById('main_list');
 	        	  var inputItem = document.getElementById('inputItem');
 	        	  ul.insertBefore(li, inputItem);
-	        	  keyin.value = "";
+
+	        	  keyin.value = "";			// memory leak?
+				  filter.innerHTML = "";	// memory leak?
+        	}
+
+        	function query(text) {
+
+			  var keyin = document.getElementById('keyin');		
+			  var filter = document.getElementById('filter');	  
+			  filter.innerHTML = ""; 	// clear for each keyin
+
+        	  if(event.keyCode == 13){	// when key for onkeypress is 'enter' or 'return'		        
+
+		        if (text.length != 0) {		
+		          addTag(text);
 	    		} 
 
     		  } else {
@@ -130,12 +133,12 @@
 	    		  				var li = document.createElement('li');
 	    		  				li.innerHTML = set[i];
 	    		  				li.onclick = function selectIt(){ 
-	    		  					// alert(this.innerHTML);
+	    		  					addTag(this.innerHTML);  	    		  					
 	    		  				};
 	    		  				filter.appendChild(li);
 	    		  			}
     		  			}
-    		  		}
+    		  		}    		  		
     		  }
         	}
 
