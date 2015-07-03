@@ -19,15 +19,15 @@
 			}
 
 			.offset{
-				left: 16px;
+				left: -500px;
 			}			
     	</style>
     </head>    
     <body>
         <div class="main">
 	        <form>
-	       		<span class="tag" id="tag"  style="visibility: hidden;">x</span>
-	       		<input type="text" id="keyin" onkeyup="queryInput(this.value)"/>
+	       		<input type="text" id="keyin" onkeyup="queryInput(this.value)"/>	       	
+	       		<span class="tag" id="tag"  style="visibility: hidden;"></span>
 	        </form>
     	</div>
         <ul name="query_result" style="display: none;"></ul>
@@ -35,14 +35,24 @@
         	function queryInput(text){
 	        	var tag = document.getElementById('tag');
 	        	var keyin = document.getElementById('keyin');
-	        	if (text != null && text != "") {        
-        			tag.classList.add("offset");     // cannot use push function
-        			tag.style.visibility = "visible";
+	        	if (text != null && text != "") {        	        		
+        			tag.classList.add("offset");
+        			tag.innerHTML = text;
+        			tag.style.visibility = "visible"; 
     			} else if (text == null || text == ""){
         			tag.classList[1] = "";
         			tag.style.visibility = "hidden";
     			}
         	}
+
+        	/* TODO:
+				function for enter pressed or mouse click
+				create a new span element for next input
+        	*/
+
+        	/* TODO:
+				function for auto-complete querying
+        	*/
         </script>
     </body>
 </html>
