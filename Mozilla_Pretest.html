@@ -7,11 +7,18 @@
 				margin-top: 100px;
     		}
     		input {
-    			width: 500px;
+    			/*width: 500px;
     			height: 30px;
     			box-shadow: 4px 4px 3px rgba(20%,20%,40%,0.5);
-    			border-radius: 5px;
+    			border-radius: 5px;*/
+    			border-style: none;
+    			background-color: yellow;
     		}
+
+			input:hover, input:focus{
+				outline: none;
+			}
+
 			.tag {
 				position: relative;
 				left: 0;
@@ -19,29 +26,45 @@
 			}
 
 			.offset{
-				left: -500px;
-			}			
+				/*left: -500px;*/
+			}
+
+			ul{
+				border-style: solid;
+			}
+
+			li{
+				list-style: none;
+				display: inline;
+			}
     	</style>
     </head>    
     <body>
         <div class="main">
-	        <form>
-	       		<input type="text" id="keyin" onkeyup="queryInput(this.value)"/>	       	
-	       		<span class="tag" id="tag"  style="visibility: hidden;"></span>
+	        <form onsubmit="return false">
+	        	<ul>
+	       			<li>
+	       				<input type="text" id="keyin" onkeypress="queryInput(this.value)"/>
+	       			</li>
+	       			<li>
+	       				<span id="new_tag" style="display: hidden;"></span>
+	       			</li>
+	       		</ul>
 	        </form>
     	</div>
         <ul name="query_result" style="display: none;"></ul>
         <script>
         	function queryInput(text){
-	        	var tag = document.getElementById('tag');
+	        	var tag = document.getElementById('new_tag');
 	        	var keyin = document.getElementById('keyin');
 	        	if (text != null && text != "") {        	        		
         			tag.classList.add("offset");
-        			tag.innerHTML = text;
-        			tag.style.visibility = "visible"; 
+        			// tag.innerHTML = text;
+        			console.log(text);
+        			tag.style.display = "inline"; 
     			} else if (text == null || text == ""){
         			tag.classList[1] = "";
-        			tag.style.visibility = "hidden";
+        			tag.style.display = "none";
     			}
         	}
 
