@@ -13,8 +13,7 @@
 				outline: none;
 			}			
 
-			input[type="submit"] {
-				/*position: absolute;*/
+			input[type="submit"] {				
 				width: 70px;
 				margin-left: 400px;
 			}
@@ -22,11 +21,11 @@
 				border-style: groove;
 				border-width: 2px;
 				width: 500px;
-				height: 20px;				
+				max-height: 100px;	/* this have height of list dynamic adjusting */
 				margin-left: 400px;
 				padding: 0;		
-				overflow: auto;	
-			}
+				overflow: auto;	/* this make tags not out of main_list */						
+			}			
 
 			li {
 				list-style: none;
@@ -46,7 +45,9 @@
 				border-radius: 5px;
 				box-shadow: 4px 4px 3px rgba(20%,20%,40%,0.5);
 				width: 200px;
-				position: absolute;
+
+				/* following makes filter not hidden when main_list is overflow:auto */
+				position: absolute;		
 				z-index: 1;				
 			}
 			#filter > li {				
@@ -57,6 +58,7 @@
 				background: yellow;
 				cursor: pointer;
 			}
+
     	</style>
     </head>    
     <body>
@@ -163,9 +165,8 @@
         	}
 
         	/* TODO:								
-				1. make list height dynamically
-				2. make some snippets into function 
-				3. remove tag (remember disable submit)
+				1. make some snippets into function 
+				2. remove tag (remember disable submit)
 				final. optimize code (efficiency and memory leak)
 				More: write explanation and test
         	*/
