@@ -86,7 +86,11 @@
 	        </form>
     	</div>
         <script>
+
         var timezone = ["Amsterdam", "Andorra", "Athens", "Belfast", "Belgrade","Berlin","Bratislava","Brussels","Bucharest","Budapest","Chișinău","Copenhagen","Dublin","Gibraltar","Guernsey","Helsinki","Isle_of_Man","Istanbul","Jersey","Kaliningrad","Kiev","Lisbon","Ljubljana","London","Luxembourg","Madrid","Malta","Mariehamn","Minsk","Monaco","Moscow","Nicosia","Oslo","Paris","Podgorica","Prague","Riga","Rome","Samara","San_Marino","Sarajevo","Simferopol","Skopje","Sofia","Stockholm","Tallinn","Tirane","Tiraspol","Uzhgorod","Vaduz","Vatican","Vienna","Vilnius","Volgograd","Warsaw","Zagreb","Zaporozhye","Zurich","Adelaide","Brisbane","Broken_Hill","Currie","Darwin","Eucla","Hobart","Lindeman","Lord_Howe","Melbourne","Perth","Sydney","Abidjan","Accra","Addis_Ababa","Algiers","Asmara","Bamako","Bangui","Banjul","Bissau","Blantyre","Brazzaville","Bujumbura","Cairo","Casablanca","Ceuta","Conakry","Dakar","Dar_es_Salaam","Djibouti","Douala","El_Aaiún","Freetown","Gaborone","Harare","Johannesburg","Juba","Kampala","Khartoum","Kigali","Kinshasa","Lagos","Libreville","Lomè","Luanda","Lubumbashi","Lusaka","Malabo","Maputo","Maseru","Mbabane","Mogadishu","Monrovia","Nairobi","N'djamena","Niamey","Nouakchott","Ouagadougou","Porto-Novo","São_Tomé","Timbuktu","Tripoli","Tunis","Windhoek","Aden","Almaty","Amman","Anadyr","Aqtau","Aqtobe","Ashgabat","Ashkhabad","Baghdad","Bahrain","Baku","Bangkok","Beirut","Bishkek","Brunei","Choibalsan","Chongqing","Colombo","Damascus","Dhaka","Dili","Dubai","Dushanbe","Gaza","Harbin","Hebron","Ho_Chi_Minh","Hong_Kong","Hovd","Irkutsk","Istanbul","Jakarta","Jayapura","Jerusalem","Kabul","Kamchatka","Karachi","Kashgar","Kathmandu","Kolkata","Krasnoyarsk","Kuala_Lumpur","Kuching","Kuwait","Macau","Magadan","Makassar","Manila","Muscat","Nicosia","Novokuznetsk","Novosibirsk","Omsk","Oral","Phnom_Penh","Pontianak","Pyongyang","Qatar","Qyzylorda","Rangoon","Riyadh","Saigon","Sakhalin","Samarkand","Seoul","Shanghai","Singapore","Taipei","Tashkent","Tbilisi","Tehran","Tel_Aviv","Thimphu","Tokyo","Ulan_Bator","Vientiane","Vladivostok","Yakutsk","Yekaterinburg","Yerevan","Casey","Davis","DumontDUrville","Macquarie","Mawson","McMurdo","Palmer","Rothera"];
+
+        	/* global variable for checkout if any tag in timezone list is inserted */
+        	var tz_tags = 0;	
 
         	 function grep(pattern, callback){
 
@@ -109,6 +113,13 @@
         		r.parentElement.remove(); 
 
         		//TODO: check submit enable variable 
+        		if(timezone.indexOf(text) >= 0){
+        			tz_tags = tz_tags - 1;
+	        		if(tz_tags == 0){
+	        			var btn = document.getElementById('submit');
+	        			btn.disabled = "on";
+	        		}
+        		}
         	 }
 
         	function addTag(text){
@@ -168,6 +179,7 @@
 	    		  				li.innerHTML = set[i];
 	    		  				li.onclick = function selectIt(){ 
 	    		  					addTag(this.innerHTML); 
+	    		  					tz_tags = tz_tags + 1;
 	    		  					var submit = document.getElementById('submit');
 	    		  					submit.removeAttribute('disabled');
 	    		  				};
@@ -184,8 +196,7 @@
         	}
 
         	/* TODO:								
-				1. remove tag (remember disable submit)
-				2. make some snippets into function 				
+				* make some snippets into function 				
 				final. optimize code (efficiency and memory leak)
 				More: write explanation and test
         	*/
