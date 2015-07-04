@@ -34,7 +34,7 @@
 				margin: 2px 5px 2px 0;
 			}
 
-			#closed_tag{
+			.closed_tag{
 				background: lightblue;
 			}
 
@@ -103,18 +103,23 @@
         	 	return result;
         	 }
         	
-        	function removeTag(){
-        		alert('removed')        		
+        	function removeTag(text){
+
+        		var r = document.getElementById(text);
+        		r.parentElement.remove(); 
+
+        		//TODO: check submit enable variable 
         	 }
 
         	function addTag(text){
 				  var tag = document.getElementById('new_tag');
 
 				  // x link is meant for removal (\xd7 is multiplication sign)
-	        	  tag.innerHTML = text + " <a class='removal' onclick='removeTag();'>\xd7</a>";	
+	        	  tag.innerHTML = text + " <a class='removal' onclick='removeTag(\"" + text + "\");'>\xd7</a>";	
 
 	        	  // change id:new_tag to id:closed_tag
-	        	  tag.id = 'closed_tag';
+	        	  tag.className = 'closed_tag';
+	        	  tag.id = text;
 
 	        	  tag.style.display = "inline"; 
 	        	  
@@ -151,7 +156,6 @@
 
     		  		if(text.length != 0){
 
-    		  			console.log(text.length + '*')
     		  			var pattern = new RegExp("^" + text, "i"); 	// "i" stands for "case-insensitive"
     		  			set = grep(pattern, function(city, pattern){
     		  			// use callback since the number of matching items is large, or if matching remotely, callback can avoid blocking if network is blocked
