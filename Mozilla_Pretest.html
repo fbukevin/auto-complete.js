@@ -59,6 +59,14 @@
 				cursor: pointer;
 			}
 
+			.removal {
+				cursor: pointer;				
+			}
+
+			.removal:hover {
+				color: red;
+			}
+
     	</style>
     </head>    
     <body>
@@ -95,13 +103,20 @@
         	 	return result;
         	 }
         	
+        	function removeTag(){
+        		alert('removed')        		
+        	 }
+
         	function addTag(text){
 				  var tag = document.getElementById('new_tag');
-	        	  tag.innerHTML = text;
-	        	  tag.style.display = "inline"; 
-	        	  
+
+				  // x link is meant for removal (\xd7 is multiplication sign)
+	        	  tag.innerHTML = text + " <a class='removal' onclick='removeTag();'>\xd7</a>";	
+
 	        	  // change id:new_tag to id:closed_tag
 	        	  tag.id = 'closed_tag';
+
+	        	  tag.style.display = "inline"; 
 	        	  
 	        	  // create a tag in id:new_tag for next insertion
 	        	  var new_tag = document.createElement('span');
@@ -165,8 +180,8 @@
         	}
 
         	/* TODO:								
-				1. make some snippets into function 
-				2. remove tag (remember disable submit)
+				1. remove tag (remember disable submit)
+				2. make some snippets into function 				
 				final. optimize code (efficiency and memory leak)
 				More: write explanation and test
         	*/
