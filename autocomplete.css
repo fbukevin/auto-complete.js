@@ -56,7 +56,7 @@ li {
 	/* following makes filter not hidden when main_list is overflow:auto */
 	position: absolute;		
 	z-index: 1;		
-	/*opacity: 1;		*/
+	/*opacity: 1;*/
 }
 #filter > li {				
 	display: block;
