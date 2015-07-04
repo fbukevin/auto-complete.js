@@ -19,18 +19,19 @@
 				margin-left: 400px;
 			}
 			#main_list {
-				border-style: solid;
+				border-style: groove;
 				border-width: 2px;
 				width: 500px;
-				height: 20px;
+				height: 20px;				
 				margin-left: 400px;
-				padding: 0;
+				padding: 0;		
+				overflow: auto;	
 			}
 
 			li {
 				list-style: none;
-				display: block;
-				float: left;
+				display: inline-block;
+				float: left;	
 				margin: 2px 5px 2px 0;
 			}
 
@@ -45,10 +46,12 @@
 				border-radius: 5px;
 				box-shadow: 4px 4px 3px rgba(20%,20%,40%,0.5);
 				width: 200px;
+				position: absolute;
+				z-index: 1;				
 			}
 			#filter > li {				
 				display: block;
-				float: none;				
+				float: none;			
 			}
 			#filter > li:hover{
 				background: yellow;
@@ -150,7 +153,9 @@
 	    		  				filter.appendChild(li);
 	    		  			}
 	    		  			filter.style.display = "block";
-    		  			} 
+    		  			} else { // no matching
+    		  				filter.style.display = "none";
+    		  			}
     		  		} else { 	// delete to no character
     		  				filter.style.display = "none";
     		  		}  		  		
