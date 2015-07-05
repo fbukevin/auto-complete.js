@@ -25,105 +25,90 @@
         	/* global variable for checkout if any tag in timezone list is inserted */
         	var tz_tags = 0;	
 
-        	 function grep(pattern, callback){
-
-        	 	var result = [];
-
-        	 	for(var i=0; i < timezone.length; i++){
-        	 		var city = timezone[i];
-        	 		var cond = callback(city, pattern);
-
-        	 		if(cond) {
-        	 			result.push(city);
-        	 		}        	 		
-        	 	}
-        	 	return result;
-        	 }
+        	function grep(pattern, callback){
+        	  var result = [];
+        	  for(var i=0; i < timezone.length; i++){
+        	 	var city = timezone[i];
+        	 	var cond = callback(city, pattern);
+        	 	if(cond) {
+        	 	  result.push(city);
+        	 	}        	 		
+        	  }
+        	  return result;
+        	}
         	
         	function removeTag(text){
-
-        		var r = document.getElementById(text);
-        		r.parentElement.remove(); 
-
-        		//TODO: check submit enable variable 
-        		if(timezone.indexOf(text) >= 0){
-        			tz_tags = tz_tags - 1;
-	        		if(tz_tags == 0){
-	        			var btn = document.getElementById('submit');
-	        			btn.disabled = "on";
-	        		}
-        		}
-        	 }
+        	  var r = document.getElementById(text);
+        	  r.parentElement.remove(); 
+        	  if(timezone.indexOf(text) >= 0){
+        		tz_tags = tz_tags - 1;
+	        	if(tz_tags == 0){
+	        	  var btn = document.getElementById('submit');
+	        	  btn.disabled = "on";
+	        	}
+        	  }
+        	}
 
         	function addTag(text){
-				  var tag = document.getElementById('new_tag');
+			  var tag = document.getElementById('new_tag');
+			  // x link is meant for removal (\xd7 is multiplication sign)
+	          tag.innerHTML = text + " <a class='removal' onclick='removeTag(\"" + text + "\");'>\xd7</a>";	
 
-				  // x link is meant for removal (\xd7 is multiplication sign)
-	        	  tag.innerHTML = text + " <a class='removal' onclick='removeTag(\"" + text + "\");'>\xd7</a>";	
-
-	        	  // change id:new_tag to id:closed_tag
-	        	  tag.className = 'closed_tag';
-	        	  tag.id = text;
-
-	        	  tag.style.display = "inline"; 
+	          // change id:new_tag to id:closed_tag
+	          tag.className = 'closed_tag';
+	          tag.id = text;
+        	  tag.style.display = "inline"; 
 	        	  
-	        	  // create a tag in id:new_tag for next insertion
-	        	  var new_tag = document.createElement('span');
-	        	  new_tag.id = 'new_tag';
-	        	  new_tag.style="display: hidden;";
-	        	  var li = document.createElement('li');
-	        	  li.appendChild(new_tag);
-	        	  var ul = document.getElementById('main_list');
-	        	  var inputItem = document.getElementById('inputItem');
-	        	  ul.insertBefore(li, inputItem);
+        	  // create a tag in id:new_tag for next insertion
+        	  var new_tag = document.createElement('span');
+        	  new_tag.id = 'new_tag';
+        	  new_tag.style="display: hidden;";
+        	  var li = document.createElement('li');
+        	  li.appendChild(new_tag);
+        	  var ul = document.getElementById('main_list');
+        	  var inputItem = document.getElementById('inputItem');
+        	  ul.insertBefore(li, inputItem);
 
-	        	  keyin.value = "";			// memory leak?
-				  filter.innerHTML = "";	// memory leak?
-				  filter.style.display = "none";
+        	  keyin.value = "";
+			  filter.innerHTML = "";
+              filter.style.display = "none";
         	}
 
         	function query(text) {
-
-			  var keyin = document.getElementById('keyin');		
-			  var filter = document.getElementById('filter');	  
+			  var keyin = document.getElementById('keyin');
+			  var filter = document.getElementById('filter');
 			  filter.innerHTML = ""; 	// clear for each keyin
-
-        	  if(event.keyCode == 13){	// when key for onkeypress is 'enter' or 'return'		        
-
-		        if (text.length != 0) {		
+        	  if(event.keyCode == 13){	// when key for onkeypress is 'enter' or 'return'
+		        if (text.length != 0) {
 		          addTag(text);
-	    		} 
-
+	    		}
     		  } else {
-
-    		  		var set = [];    
-
-    		  		if(text.length != 0){
-
-    		  			var pattern = new RegExp("^" + text, "i"); 	// "i" stands for "case-insensitive"
-    		  			set = grep(pattern, function(city, pattern){
-    		  			// use callback since the number of matching items is large, or if matching remotely, callback can avoid blocking if network is blocked
-    		  				return pattern.test(city);
-    		  			}); 
+    		  	var set = [];
+    		  	if(text.length != 0){
+    		  	  var pattern = new RegExp("^" + text, "i"); 	// "i" stands for "case-insensitive"
+    			  set = grep(pattern, function(city, pattern){
+    		  	  // use callback since the number of matching items is large, or if matching remotely, callback can avoid blocking if network is blocked
+    		  	  return pattern.test(city);
+    		  	  }); 
     		  			
-    		  			if(set.length != 0){    		  				
-	    		  			for(var i=0; i < set.length; i++){
-	    		  				var li = document.createElement('li');
-	    		  				li.innerHTML = set[i];
-	    		  				li.onclick = function selectIt(){ 
-	    		  					addTag(this.innerHTML); 
-	    		  					tz_tags = tz_tags + 1;
-	    		  					var submit = document.getElementById('submit');
-	    		  					submit.removeAttribute('disabled');
-	    		  				};
-	    		  				filter.appendChild(li);
-	    		  			}
-	    		  			filter.style.display = "block";
-    		  			} else { // no matching
-    		  				filter.style.display = "none";
-    		  			}
-    		  		} else { 	// delete to no character
-    		  				filter.style.display = "none";
-    		  		}  		  		
+    		  	  if(set.length != 0){    		  				
+	    		    for(var i=0; i < set.length; i++){
+                      var li = document.createElement('li');
+                      li.innerHTML = set[i];
+                      li.onclick = function selectIt(){ 
+                        addTag(this.innerHTML); 
+                        tz_tags = tz_tags + 1;
+                        var submit = document.getElementById('submit');
+                        submit.removeAttribute('disabled');
+                      };
+                      filter.appendChild(li);
+                    }
+	    		    filter.style.display = "block";
+    		  	  } else { // no matching
+    		  	    filter.style.display = "none";
+    		  	  }
+    		    } else { 	// delete to no character
+    		    filter.style.display = "none";
+    		    }  		  		
     		  }
-        	}
+            }
