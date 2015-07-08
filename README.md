@@ -1,4 +1,22 @@
-# Report
+# Introduction
+
+This is a pre-test of Mozilla Taiwan front-end engineer. This project is not perfect. I open it for reference and welcome for improvement.
+
+# Requirement
+
+1. Avoid use any well-known UI libraries ( Like jQuery )
+2. The dataset should contain 100 ~ 1000 entries. Timezone names in tzdata 
+[1] is a good example, but you don't need to load the JSON example [2] 
+as-is.
+3. User should be blocked from submit the input unless the input matches 
+one of the entries.
+4. The whole thing should work when loading from `http://localhost/` or `file:/// 
+url`, without server-side (e.g. PHP) logic.
+5. Please take care of memory consumption and efficiency.
+6. Consider making your code unit-testable and reusable.
+
+[1] [https://en.wikipedia.org/wiki/Tzdata](https://en.wikipedia.org/wiki/Tzdata)<br>
+[2] [https://github.com/mozilla-b2g/gaia/blob/master/shared/resources/tz.json](https://github.com/mozilla-b2g/gaia/blob/master/shared/resources/tz.json)
 
 ## How did I do?
 1. I used \<list>, \<span> and \<input> to finish this test.
