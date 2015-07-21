@@ -1,7 +1,3 @@
-# Introduction
-
-This is a pre-test of Mozilla Taiwan front-end engineer. This project is not perfect. I open it for reference and welcome for improvement.
-
 
 ## How did I do?
 1. I used \<list>, \<span> and \<input> to finish this test.
